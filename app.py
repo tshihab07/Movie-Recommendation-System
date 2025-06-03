@@ -4,9 +4,6 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify  #
 import pandas as pd
 import pickle
 import requests
-from datetime import datetime
-
-# updated: 03-06-2025 12:41 AM
 import re
 from difflib import get_close_matches
 from functools import lru_cache
