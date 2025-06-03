@@ -1,0 +1,351 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #032541;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-container form {
+    display: flex;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+}
+
+.search-container button {
+    background-color: #01b4e4;
+    color: white;
+    border: none;
+    padding: 0 1.5rem;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+/* Carousel Styles */
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 1rem 0;
+    scrollbar-width: none; /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.carousel-item {
+    scroll-snap-align: start;
+    min-width: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.carousel-item:hover {
+    transform: scale(1.05);
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.movie-info {
+    padding: 1rem;
+    background: white;
+}
+
+/* Movie Grid */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.movie-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+}
+
+.movie-card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.movie-card h3 {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Movie Detail Page */
+.movie-detail {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.movie-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.movie-header img {
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.movie-meta h1 {
+    margin-top: 0;
+    color: #032541;
+}
+
+.release-date {
+    color: #666;
+    font-weight: bold;
+}
+
+.overview {
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Carousel Navigation */
+.carousel-container {
+    position: relative;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.carousel-nav button {
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 60px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-nav button:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+/* Home Button */
+.home-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #032541;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.home-button:hover {
+    background: #01b4e4;
+    transform: scale(1.1);
+}
+
+/* Improved Search Bar Styles */
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.app-title {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.search-container form {
+    display: flex;
+    width: 100%;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+    height: 40px; /* Fixed height */
+    box-sizing: border-box;
+}
+
+.search-container button {
+    height: 40px; /* Match input height */
+    width: 40px;
+}
+
+/* Autocomplete Results Styling */
+.autocomplete-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.autocomplete-item:hover {
+    background-color: #f5f5f5;
+}
+
+.suggestion-poster {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+/* Search bar active state */
+.search-container input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #01b4e4;
+}
+
+.search-container input:focus + .autocomplete-results {
+    display: block;
+}
+
+
+.search-results-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+
+/* Enhanced search results */
+.suggested-results {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.suggested-results h3 {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.did-you-mean {
+    background-color: #fff3cd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.did-you-mean a {
+    color: #d35400;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .movie-header {
+        flex-direction: column;
+    }
+    
+    .movie-header img {
+        width: 100%;
+    }
+    
+    .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
