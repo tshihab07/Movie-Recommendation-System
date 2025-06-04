@@ -141,19 +141,19 @@ Download [Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata).
 
 ```bash
 movie-recommender/
-├── app.py                        # Updated with new search logic
+├── app.py                        # search logic and backend development
 ├── templates/
-│   ├── base.html                 # Your existing base template
-│   ├── index.html                # Your existing home page
-│   └── query_correction.html     # NEW search results page
+│   ├── base.html                 # base template
+│   ├── index.html                # home page
+│   └── query_correction.html     # search results page
 ├── static/
 │   ├── css/
-│   │   └── style.css             # Updated with new styles
+│   │   └── style.css             # styles
 │   └── js/
-│       └── script.js             # Updated form handling
+│       └── script.js             # search bar handling
 └── model/
-    ├── movie_cleaned.csv         # Your movie data
-    └── similarities.pkl          # Your similarity data
+    ├── movie_cleaned.csv         # movie data
+    └── similarities.pkl          # similarity data
 ```
 
 
