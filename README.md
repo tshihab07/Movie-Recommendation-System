@@ -37,7 +37,6 @@
 Content-based filtering using cosine similarity which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffd8d8'}}}%%
 graph TD
     A[("User Search 
     (e.g. 'spidr man')")] --> B["Normalize Query
@@ -54,17 +53,6 @@ graph TD
     G -->|Yes| H[["Show Keyword Results"]]
     G -->|No| I[["Show 'Did You Mean...' 
     + Top Suggestions"]]
-    
-    %% Styling
-    classDef user fill:#4CAF50,color:white,stroke:#388E3C;
-    classDef process fill:#2196F3,color:white;
-    classDef decision fill:#FFC107,color:black;
-    classDef result fill:#009688,color:white;
-    
-    class A user;
-    class B,D,E,F process;
-    class C,G decision;
-    class H,I result;
 ```
 
 - Query is normalized and compared against a dataset of around 5000 movies.
@@ -224,6 +212,6 @@ Contributions are welcome! Please feel free to submit a pull request.
 This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
-E-mail: tushar.shihab13@gmail.com
-More Repositories: [Projects](https://github.com/tshihab07?tab=repositories)
+E-mail: tushar.shihab13@gmail.com <br>
+More Projects: 👉🏿[Projects](https://github.com/tshihab07?tab=repositories)<br?
 Linkedin: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
