@@ -35,8 +35,8 @@
 
 ### Smart Suggestions Technique
 Content-based filtering using cosine similarity which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
-graph TD
 ```mermaid
+graph TD
     A[User Search] --> B(Normalize Query)
     B --> C{Exact Match?}
     C -->|Yes| D[Show Exact Results]
