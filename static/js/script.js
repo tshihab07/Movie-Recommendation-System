@@ -1,14 +1,14 @@
-// Carousel functionality with navigation
+// carousel functionality with navigation
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize carousels
+    // initialize carousels
     initCarousels();
     
-    // Search autocomplete
+    // search autocomplete
     initSearchAutocomplete();
 });
 
-// Initialize carousels on the page
-// This function sets up the carousels with navigation buttons
+// initialize carousels on the page
+// sets up the carousels with navigation buttons
 function initCarousels() {
     const carousels = document.querySelectorAll('.carousel-container');
     
@@ -20,7 +20,7 @@ function initCarousels() {
         let scrollAmount = 0;
         const itemWidth = 220;
         
-        // Button event listeners
+        // button event listeners
         nextBtn.addEventListener('click', () => {
             scrollAmount += itemWidth * 3;
             if (scrollAmount > carousel.scrollWidth - carousel.clientWidth) {
@@ -37,8 +37,8 @@ function initCarousels() {
     });
 }
 
-// Smooth scrolling function for carousels
-// This function scrolls the carousel smoothly to the target position
+// smooth scrolling function for carousels
+// scrolls the carousel smoothly to the target position
 function smoothScroll(element, target) {
     element.scrollTo({
         left: target,
@@ -46,8 +46,8 @@ function smoothScroll(element, target) {
     });
 }
 
-// Search autocomplete functionality
-// This function initializes the search autocomplete feature
+// search autocomplete functionality
+// initializes the search autocomplete feature
 function initSearchAutocomplete() {
     const searchInput = document.querySelector('input[name="q"]');
     if (!searchInput) return;
@@ -57,7 +57,7 @@ function initSearchAutocomplete() {
     resultsContainer.className = 'autocomplete-results';
     searchForm.appendChild(resultsContainer);
 
-    // Debounce implementation
+    // debounce implementation
     let debounceTimer;
     const debounceDelay = 300;
     
@@ -99,7 +99,7 @@ function initSearchAutocomplete() {
         }, debounceDelay);
     });
 
-    // Hide results when clicking outside the search form
+    // hide results when clicking outside the search form
     document.addEventListener('click', (e) => {
         if (!searchForm.contains(e.target)) {
             resultsContainer.innerHTML = '';
@@ -113,7 +113,7 @@ function initSearchAutocomplete() {
     });
 }
 
-// Search form validation to prevent empty queries
+// search form validation to prevent empty queries
 document.addEventListener('DOMContentLoaded', function() {
     const searchForm = document.querySelector('.search-container form');
     const searchInput = document.querySelector('.search-container input[name="q"]');
