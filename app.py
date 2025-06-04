@@ -9,7 +9,7 @@ from difflib import get_close_matches
 from functools import lru_cache
 
 
-# flask application setup
+# Flask application setup
 app = Flask(__name__)
 
 # load data
@@ -23,7 +23,7 @@ API_KEY = '5dd351fde2e8606b5b6e50a24d10e888'
 
 ################ HELPER FUNCTIONS ################
 
-# function to retrieves the poster URL for a given movie ID
+# function to retrieve the poster URL for a given movie ID
 def get_poster(mov_id):
     response = requests.get(f'https://api.themoviedb.org/3/movie/{mov_id}?api_key={API_KEY}&language=en-US')
     data = response.json()
@@ -36,7 +36,7 @@ def get_movie_details(mov_id):
     return response.json()
 
 
-# function to retrieves similar movies based on the title
+# function to retrieve similar movies based on the title
 # it uses precomputed similarities to find the closest matches
 def get_recommendations(movie_name):
     movie_idx = data[data['Title'] == movie_name].index[0]
@@ -71,9 +71,6 @@ def normalize_search_text(text):
     text = re.sub(r"[^\w\s]", "", text)   # Remove special characters
     return text.strip()
 
-
-# function to provides a 'Did You Mean' feature
-# it checks for exact matches, partial matches, and fuzzy suggestions
 
 # function to find related movies with enhanced search which combines exact matches, keyword matching, and suggestions
 def find_related_movies(query):
@@ -156,7 +153,6 @@ def movie_detail(movie_id):
     recommendations = get_recommendations(movie_title)
     
     return render_template('movie.html', movie=movie_data, recommendations=recommendations)
-
 
 
 @app.route('/search', methods=['GET'])
