@@ -14,19 +14,27 @@
 - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Technical Architecture](#technical-architecture)
+- [Technical Implementation](#techinal-implementation)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
+
+## Overview
+This **Movie Recommendation System** is a Flask-based web application that helps users discover films based on their search queries. It intelligently corrects typos (e.g., "avngers" → "avengers") and suggests relevant movies even when titles are misspelled or formatted differently (e.g., "spider man" matches "Spider-Man"). This system bridges the gap between imperfect user queries and accurate movie discovery, making it easier to find films even with typos or formatting inconsistencies.
+
+
 ## Features
 
 ### Intelligent Search
+
 - **Hyphen/Special Character Resilient**: Finds the original movie on any search, even if it contains special characters, spaces, or hyphens.
 - **Fuzzy Matching**: Suggests corrections for misspellings (e.g., "avngrs" → "Avengers") and shows the result based on the correct spelling.
 - **Real-time Suggestions**: Displays results as you type with movie posters.
 
 ### Rich Interface
+
 - **Interactive Carousel**: Browse latest releases with navigation controls
 - **Movie Detail Pages**: Complete with:
   - High-resolution posters fetched from TMDB using TMDB API
@@ -34,6 +42,7 @@
 - **Responsive Design**: Works perfectly on mobile and desktop
 
 ### Smart Suggestions Technique
+
 Content-based filtering using cosine similarity which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
 
 ```mermaid
@@ -62,7 +71,9 @@ graph TD
   - Partial keyword matches
   - Fuzzy match suggestions
   - Full keyword matches
+
 **Query Normalization**
+
 ```python
 # Converts all variants to comparable format
 "Spider-Man" → "spiderman"
@@ -71,6 +82,7 @@ graph TD
 ```
 
 **Keyword Search Fallback**
+
 ```python
 # Searches for all keywords in titles
 "iron man" → finds:
@@ -81,6 +93,7 @@ graph TD
 ```
 
 **Fuzzy Suggestion Engine**
+
 ```python
 # Uses Levenshtein distance for typos
 Input: "avngers"
@@ -88,6 +101,7 @@ Suggestions: ["avengers", "angers", "avenger"]
 ```
 
 **Context-Aware Results**
+
 ```bash
 Did you mean: captain america?
 Showing:
@@ -96,6 +110,7 @@ Showing:
 ```
 
 **Partial Word Matching**
+
 ```bash
 "end gam" → matches "Avengers: Endgame"
 ```
@@ -143,6 +158,7 @@ movie-recommender/
 
 
 ## Dependencies
+
 ```python
 flask==2.3.2                    # For web framework
 pandas==2.0.3                   # For data preprocessing
@@ -155,6 +171,7 @@ python-Levenshtein==0.21.1      # For fuzzy matching
 ```
 
 ## Installation
+
 ```bash
 git clone https://github.com/tshihab07/Movie-Recommendation-System.git
 ```
@@ -163,6 +180,7 @@ cd Movie-Recommendation-System
 ```
 
 ### Create a virtual environment
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
@@ -170,6 +188,7 @@ source .venv/bin/activate  # Linux/Mac
 ```
 
 ### Install all requirements
+
 ```python
 pip install -r requirements.txt
 ```
@@ -181,6 +200,7 @@ python app.py
 
 
 ## Technical Architecture
+
 ```mermaid
 graph TD
     A[User] --> B[Flask App]
@@ -193,7 +213,17 @@ graph TD
 ```
 
 
+## Technical Implementation
+
+- **Backend:** Python (Flask)
+- **Data Processing:** Pandas, NumPy
+- **Search & Suggestions:** Fuzzy matching (python-Levenshtein), keyword extraction
+- **Frontend:** HTML/CSS, JavaScript (for autocomplete)
+- **API Integration:** TMDB (for movie posters/details)
+
+
 ## Future Enhancement
+
 This project is a content-based recommendation system. It can be improved in the future as follows:
 - Collaborative filtering (user-user similarity)
 - Neural embeddings (BERT for semantic search)
@@ -201,6 +231,7 @@ This project is a content-based recommendation system. It can be improved in the
 
 
 ## Contributing
+
 Contributions are welcome! Please feel free to submit a pull request.
 - Fork the project.
 - Create your feature branch
@@ -208,10 +239,14 @@ Contributions are welcome! Please feel free to submit a pull request.
 - Push
 - Open a Pull Request
 
+
 ## License
+
 This project is licensed under the [MIT License](LICENSE).
 
+
 ## Contact
+
 E-mail: tushar.shihab13@gmail.com <br>
 More Projects: 👉🏿[Projects](https://github.com/tshihab07?tab=repositories)<br?
 Linkedin: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
