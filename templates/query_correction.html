@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="search-results-container">
+
+    {% if not has_results %}
+    <div class="no-results">
+        <h2>No results found for "{{ query }}"</h2>
+        <p>Try searching for a different movie or check the spelling.</p>
+        <a href="{{ url_for('home') }}" class="btn">Browse Latest Movies</a>
+    </div>
+    {% endif %}
+
+    {% if is_corrected %}
+    <div class="did-you-mean">
+        <p>Did you mean: 
+            <a href="{{ url_for('search', q=suggestions[0]) }}">{{ suggestions[0] }}</a>?
+        </p>
+        <p>Showing results for similar movies:</p>
+    </div>
+    {% endif %}
+
+    <h2>
+        {% if results %}
+            {% if is_corrected %}
+                Similar to "{{ query }}"
+            {% else %}
+                Results for "{{ query }}"
+            {% endif %}
+        
+        {% else %}
+            No results found for "{{ query }}"
+        {% endif %}
+    </h2>
+    
+    <div class="movie-grid">
+        {% for movie in results %}
+        <div class="movie-card">
+            <a href="{{ url_for('movie_detail', movie_id=movie.id) }}">
+                <img src="{{ movie.poster }}" alt="{{ movie.title }}" loading="lazy">
+                <h3>{{ movie.title }}</h3>
+                <p>{{ movie.release_date }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

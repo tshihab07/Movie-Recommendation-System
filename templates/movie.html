@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="movie-detail">
+        <div class="movie-header">
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+            <div class="movie-meta">
+                <h1>{{ movie.title }}</h1>
+                <p class="release-date">{{ movie.release_date }}</p>
+                <p class="overview">{{ movie.overview }}</p>
+            </div>
+        </div>
+        
+        <div class="recommendations">
+            <h2>You Might Also Like</h2>
+            <div class="movie-grid">
+                {% for rec in recommendations %}
+                    <a href="{{ url_for('movie_detail', movie_id=rec.id) }}" class="movie-card">
+                        <img src="{{ rec.poster }}" alt="{{ rec.title }}">
+                        <h3>{{ rec.title }}</h3>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if search_results %}
+        <section class="search-results">
+            <h2>Search Results for "{{ search_query }}"</h2>
+            <div class="movie-grid">
+                {% for movie in search_results %}
+                    <a href="{{ url_for('movie_detail', movie_id=movie.id) }}" class="movie-card">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}">
+                        <h3>{{ movie.title }}</h3>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+    {% else %}
+    
+<section class="latest-movies">
+    <h2>Latest Releases</h2>
+    <div class="carousel-container">
+        <div class="carousel-nav">
+            <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="carousel">
+            {% for movie in latest_movies %}
+                <div class="carousel-item">
+                    <a href="{{ url_for('movie_detail', movie_id=movie.id) }}">
+                        <img src="{{ movie.poster }}" alt="{{ movie.title }}" loading="lazy">
+                        <div class="movie-info">
+                            <h3>{{ movie.title }}</h3>
+                            <p>Released: {{ movie.release_date }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+    {% endif %}
+{% endblock %}
