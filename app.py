@@ -1,6 +1,6 @@
 import werkzeug
 werkzeug.urls.url_quote = werkzeug.utils.escape
-from flask import Flask, render_template, request, redirect, url_for, jsonify  # Updated import
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import pandas as pd
 import pickle
 import requests
@@ -9,31 +9,35 @@ from difflib import get_close_matches
 from functools import lru_cache
 
 
-# Flask application setup
+# flask application setup
 app = Flask(__name__)
 
-# Load data
+# load data
 data = pd.read_csv('model/movie_cleaned.csv')
 similar = pickle.load(open('model/similarities.pkl', 'rb'))
 
 # TMDB API Key
 API_KEY = '5dd351fde2e8606b5b6e50a24d10e888'
 
-################ HELPER FUNCTIONS ############
-# Function to get movie poster from TMDB API
+
+
+################ HELPER FUNCTIONS ################
+
+# function to retrieves the poster URL for a given movie ID
 def get_poster(mov_id):
     response = requests.get(f'https://api.themoviedb.org/3/movie/{mov_id}?api_key={API_KEY}&language=en-US')
     data = response.json()
     return f"https://image.tmdb.org/t/p/w500{data['poster_path']}" if data.get('poster_path') else None
 
 
-# Function to get movie details from TMDB API
+# function to get movie details from TMDB
 def get_movie_details(mov_id):
     response = requests.get(f'https://api.themoviedb.org/3/movie/{mov_id}?api_key={API_KEY}&language=en-US')
     return response.json()
 
 
-# Function to get movie recommendations based on title
+# function to retrieves similar movies based on the title
+# it uses precomputed similarities to find the closest matches
 def get_recommendations(movie_name):
     movie_idx = data[data['Title'] == movie_name].index[0]
     distances = similar[movie_idx]
@@ -49,99 +53,85 @@ def get_recommendations(movie_name):
             'poster': poster,
             'id': movie_id
         })
+        
     return recommendations
 
 
 
-############ SEARCH ENHANCEMENTS ############
+################ SEARCH ENHANCEMENT ################
 
-@lru_cache(maxsize=5000)                                        # Cache normalized titles for performance
+# function to normalizes text for better search matching
+@lru_cache(maxsize=5000)  # Cache for performance
 def normalize_search_text(text):
     """Converts all variants to searchable format"""
     if pd.isna(text): 
         return ""
     text = str(text).lower()
-    text = re.sub(r"[-\s_]+", " ", text)                        # Replace hyphens/underscores with spaces
-    text = re.sub(r"[^\w\s]", "", text)                         # Remove special characters
+    text = re.sub(r"[-\s_]+", " ", text)  # Replace hyphens/underscores with spaces
+    text = re.sub(r"[^\w\s]", "", text)   # Remove special characters
     return text.strip()
 
 
-# Enhanced search function to provide suggestions and corrections
-# This function will return exact matches, partial matches, and suggestions for misspelled titles
-def get_search_suggestions(query):
-    """ Enhanced search with 'Did You Mean' feature """
-    # normalize the query for comparison
-    norm_query = normalize_search_text(query)
-    
-    # find exact matches first
-    # use both direct string match and normalized match
-    direct_matches = data[
-        (data['Title'].str.lower() == query.lower()) |
-        (data['Title'].apply(normalize_search_text) == norm_query)
-    ]
-    
-    # Find partial matches if no direct hits
-    if len(direct_matches) == 0:
-        partial_matches = data[
-            data['Title'].str.lower().str.contains(query.lower()) |
-            data['Title'].apply(normalize_search_text).str.contains(norm_query)
-        ]
-        
-        # Fuzzy match suggestions if still no results
-        if len(partial_matches) == 0:
-            all_titles = data['Title'].apply(normalize_search_text).tolist()
-            suggestions = get_close_matches(norm_query, all_titles, n=3, cutoff=0.6)
-            return data[data['Title'].apply(normalize_search_text).isin(suggestions)]
-        
-        return partial_matches
-    
-    return direct_matches
+# function to provides a 'Did You Mean' feature
+# it checks for exact matches, partial matches, and fuzzy suggestions
 
-
-# Enhanced search function to find related movies
-def find_related_movies(query, exact_match_only=False):
+# function to find related movies with enhanced search which combines exact matches, keyword matching, and suggestions
+def find_related_movies(query):
     """
-    Find movies with matching keywords in title
-    Returns: (matches, suggestions, original_query)
+    Enhanced version with:
+    - Better spelling correction
+    - Complete keyword matching
+    - Clear suggestion handling
     """
-    normalized_query = normalize_search_text(query)
+    original_query = query.strip()
+    normalized_query = normalize_search_text(original_query)
     
-    # First try exact matches
+    # exact matches
     exact_matches = data[
-        (data['Title'].str.lower() == query.lower()) |
+        (data['Title'].str.lower() == original_query.lower()) |
         (data['Title'].apply(normalize_search_text) == normalized_query)
     ]
     
-    if not exact_match_only and (exact_matches.empty or len(exact_matches) < 5):
-        # Split query into keywords (ignore small words)
-        keywords = [word for word in re.split(r'\W+', query.lower()) 
-                  if len(word) > 2 and word not in ['the', 'and', 'of']]
-        
-        # Find movies containing all keywords
-        keyword_matches = data
-        for keyword in keywords:
-            keyword_matches = keyword_matches[
-                data['Title'].str.lower().str.contains(keyword)
-            ]
-        
-        # Combine with exact matches
-        matches = pd.concat([exact_matches, keyword_matches]).drop_duplicates()
-    else:
-        matches = exact_matches
+    # extract keywords from the query
+    # splits the query into keywords for better matching
+    keywords = [word for word in re.split(r'\W+', original_query.lower()) 
+              if len(word) > 2 and word not in ['the', 'and', 'of']]
     
-    # Get spelling suggestions if needed
+    
+    # find movies that match any of the keywords
+    # filters the dataset for movies that contain any of the keywords in their titles
+    keyword_matches = data.copy()
+    for keyword in keywords:
+        keyword_matches = keyword_matches[
+            keyword_matches['Title'].str.lower().str.contains(keyword)
+        ]
+    
+    # combined matches
+    # combines exact matches and keyword matches, ensuring no duplicates
+    all_matches = pd.concat([exact_matches, keyword_matches]).drop_duplicates()
+    
+    # get spelling suggestions if too few matches
+    # checks if the number of matches is less than 3, indicating a possible typo
     suggestions = []
-    if matches.empty:
+    if len(all_matches) < 2:
         all_titles = data['Title'].apply(normalize_search_text).tolist()
         suggestions = get_close_matches(normalized_query, all_titles, n=3, cutoff=0.5)
+        
+        # use the best suggestion to find more movies
+        if suggestions:
+            suggested_matches, _, _ = find_related_movies(suggestions[0])
+            all_matches = pd.concat([all_matches, suggested_matches]).drop_duplicates()
     
-    return matches, suggestions, query
+    return all_matches, suggestions, original_query
 
 
-# Flask routes for handling requests
+
+################ APPLICATION ROUTES ################
+
+# main route to serves the home page with the latest movies and their posters
 @app.route('/')
 def home():
-    # Get latest 10 movies by release date
+    # get latest 10 movies by release date
     latest_movies = data.sort_values('Release Date', ascending=False).head(10)
     latest_with_posters = []
     
@@ -158,19 +148,51 @@ def home():
 
 @app.route('/movie/<int:movie_id>')
 def movie_detail(movie_id):
-    # Get movie details from TMDB API
+    # get movie details from TMDB API
     movie_data = get_movie_details(movie_id)
     
     # Get recommendations
     movie_title = data[data['ID'] == movie_id]['Title'].values[0]
     recommendations = get_recommendations(movie_title)
     
-    return render_template('movie.html', 
-                         movie=movie_data, 
-                         recommendations=recommendations)
+    return render_template('movie.html', movie=movie_data, recommendations=recommendations)
 
 
-# Search suggestions endpoint
+
+@app.route('/search', methods=['GET'])
+def search():
+    try:
+        query = request.args.get('q', '').strip()
+        
+        if not query:
+            return redirect(url_for('home'))
+        
+        matches, suggestions, original_query = find_related_movies(query)
+        
+        # Prepare results
+        results = []
+        for _, row in matches.iterrows():
+            poster = get_poster(row['ID']) if pd.notnull(row['ID']) else None
+            if poster:
+                results.append({
+                    'title': row['Title'],
+                    'id': row['ID'],
+                    'poster': poster,
+                    'release_date': row['Release Date']
+                })
+        
+        return render_template('query_correction.html',
+                            query=original_query,
+                            results=results,
+                            suggestions=suggestions,
+                            is_corrected=len(suggestions) > 0,
+                            has_results=len(results) > 0)
+    
+    except Exception as e:
+        print(f"Search error: {e}")
+        return render_template('query_correction.html', query=request.args.get('q', ''), results=[], suggestions=[], has_results=False)
+
+
 @app.route('/search_suggestions')
 def search_suggestions():
     query = request.args.get('q', '').lower()
@@ -186,32 +208,6 @@ def search_suggestions():
             'poster': get_poster(row['ID']) if pd.notnull(row['ID']) else None
         })
     return jsonify(results)
-
-
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('q', '').strip()
-    
-    if not query:
-        return redirect(url_for('home'))
-    
-    matches, suggestions, original_query = find_related_movies(query)
-    
-    # Prepare results
-    results = []
-    for _, row in matches.iterrows():
-        results.append({
-            'title': row['Title'],
-            'id': row['ID'],
-            'poster': get_poster(row['ID']),
-            'release_date': row['Release Date']
-        })
-    
-    return render_template('search_results.html',
-                         query=original_query,
-                         results=results,
-                         suggestions=suggestions,
-                         is_corrected=len(suggestions) > 0)
 
 
 if __name__ == '__main__':
