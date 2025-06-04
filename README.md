@@ -36,6 +36,7 @@
 ### Smart Suggestions Technique
 Content-based filtering using cosine similarity which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
 graph TD
+```mermaid
     A[User Search] --> B(Normalize Query)
     B --> C{Exact Match?}
     C -->|Yes| D[Show Exact Results]
@@ -44,6 +45,7 @@ graph TD
     F --> G{Enough Results?}
     G -->|Yes| H[Show Keyword Results]
     G -->|No| I[Show "Did You Mean" + Suggestions]
+```
 
 - Query is normalized and compared against a dataset of around 5000 movies.
 - Results ranked by:
@@ -92,6 +94,7 @@ Showing:
 
 
 ## Data Flow
+
 ### Dataset
 The dataset is collected from Kaggle.
 Download [Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata).
@@ -101,16 +104,18 @@ Download [Dataset](https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata).
   - Vectorize the text data to get similar and closely related movies
 
 ### Libraries Description
-| <div align="left">Library Functions</div>                                                        | <div align="left">Purpose<div>                                                                                                                   |
-| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | <p align="left">**`Numpy`**</p>                                         | <p align="Left">Used for working with arrays, matrices, and performing mathematical operations.</p>  |
-    | <p align="left">**`Pandas`**</p>                                         | <p align="left">Used for loading, cleaning, and transforming tabular data.</p>                                    |
-    | <p align="left">**`CountVectorizer`**</p> | <p align="left">Imports **CountVectorizer** from scikit-learn, which converts text documents into a matrix of token counts for vectorizing text for ML or similarity comparison.</p>    |
-    | <p align="left">**`cosine_similarity`**</p>      | <p align="left">Used to compute **cosine similarity** between vectors for measuring how similar two items are based on vectorized features.</p>            |
-    | <p align="left">**`PorterStemmer`**</p>                  | <p align="left">Imports the **Porter stemming** from NLTK, used to reduce words to their root form  that helps normalize text for more effective comparison.</p> |
+
+| Library/Functions          | Purpose |
+|----------------------------|---------|
+| **`NumPy`**                | Used for working with arrays, matrices, and performing mathematical operations |
+| **`Pandas`**               | Used for loading, cleaning, and transforming tabular data |
+| **`CountVectorizer`** (scikit-learn) | Converts text documents into a matrix of token counts for vectorizing text for ML or similarity comparison |
+| **`cosine_similarity`** (scikit-learn) | Computes cosine similarity between vectors to measure how similar two items are based on vectorized features |
+| **`PorterStemmer`** (NLTK) | Reduces words to their root form (stemming) to normalize text for more effective comparison |
 
 
 ## File Structure
+
 ```bash
 movie-recommender/
 ├── app.py                        # Updated with new search logic
@@ -175,8 +180,8 @@ graph TD
     C --> D[Normalization Module]
     C --> E[Suggestions Engine]
     B --> F[TMDB API]
-    G --> H[Movie Metadata]
-    G --> I[Similarity Matrix]
+    G[Model] --> H[Movie Metadata]
+    G[Model] --> I[Similarity Matrix]
 ```
 
 
