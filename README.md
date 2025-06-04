@@ -35,16 +35,36 @@
 
 ### Smart Suggestions Technique
 Content-based filtering using cosine similarity which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
+
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#ffd8d8'}}}%%
 graph TD
-    A[User Search] --> B(Normalize Query)
-    B --> C{Exact Match?}
-    C -->|Yes| D[Show Exact Results]
-    C -->|No| E[Generate Suggestions]
-    E --> F[Find Keyword Matches]
-    F --> G{Enough Results?}
-    G -->|Yes| H[Show Keyword Results]
-    G -->|No| I[Show "Did You Mean" + Suggestions]
+    A[("User Search 
+    (e.g. 'spidr man')")] --> B["Normalize Query
+    (remove hyphens/special chars)"]
+    B --> C{"Exact Match?
+    (e.g. 'Spider-Man')"}
+    C -->|Yes| D[["Show Exact Results"]]
+    C -->|No| E["Generate Suggestions
+    (fuzzy matching)"]
+    E --> F["Find Keyword Matches
+    (all 'spider man' movies)"]
+    F --> G{"Enough Results?
+    (≥3 matches)"}
+    G -->|Yes| H[["Show Keyword Results"]]
+    G -->|No| I[["Show 'Did You Mean...' 
+    + Top Suggestions"]]
+    
+    %% Styling
+    classDef user fill:#4CAF50,color:white,stroke:#388E3C;
+    classDef process fill:#2196F3,color:white;
+    classDef decision fill:#FFC107,color:black;
+    classDef result fill:#009688,color:white;
+    
+    class A user;
+    class B,D,E,F process;
+    class C,G decision;
+    class H,I result;
 ```
 
 - Query is normalized and compared against a dataset of around 5000 movies.
