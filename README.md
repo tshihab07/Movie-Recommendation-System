@@ -1,4 +1,4 @@
-# Movie Recommendation System
+# TMDB Movie Recommendation System
 
 ## Table of Contents
 - [Overview](#overview)
