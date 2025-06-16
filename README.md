@@ -145,7 +145,7 @@ movie-recommender/
 ├── templates/
 │   ├── base.html                 # base template
 │   ├── index.html                # home page
-│   └── movie.html     # search results page
+│   └── movie.html                # movie details
 │   └── query_correction.html     # search results page
 ├── static/
 │   ├── css/
