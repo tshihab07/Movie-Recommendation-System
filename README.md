@@ -168,7 +168,7 @@ requests==2.31.0                # For API call
 python-dotenv==1.0.0
 gunicorn==20.1.0                # For production
 scikit-learn==1.3.0             # For recommendation engine
-python-Levenshtein==0.21.1      # For fuzzy matching
+python-Levenshtein==0.21.1
 ```
 
 ## Installation
