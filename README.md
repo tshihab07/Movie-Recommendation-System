@@ -250,4 +250,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 E-mail: tushar.shihab13@gmail.com <br>
 More Projects: 👉🏿 [Projects](https://github.com/tshihab07?tab=repositories)<br>
-Linkedin: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
+LinkedIn: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
