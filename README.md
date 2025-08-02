@@ -168,7 +168,7 @@ requests==2.31.0                # For API call
 python-dotenv==1.0.0
 gunicorn==20.1.0                # For production
 scikit-learn==1.3.0             # For recommendation engine
-python-Levenshtein==0.21.1      # For fuzzy matching
+python-Levenshtein==0.21.1
 ```
 
 ## Installation
@@ -250,4 +250,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 E-mail: tushar.shihab13@gmail.com <br>
 More Projects: 👉🏿 [Projects](https://github.com/tshihab07?tab=repositories)<br>
-Linkedin: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
+LinkedIn: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
