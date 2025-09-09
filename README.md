@@ -1,4 +1,5 @@
 # TMDB Movie Recommendation System
+The TMDB Movie Recommendation System leverages data from The Movie Database (TMDB) — a rich, community-driven platform with extensive metadata on films, actors, genres, and user ratings — to deliver personalized movie suggestions.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -43,7 +44,7 @@ This **Movie Recommendation System** is a Flask-based web application that helps
 
 ### Smart Suggestions Technique
 
-Content-based filtering using cosine similarity which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
+Content-based filtering using cosine similarity, which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
 
 ```mermaid
 graph TD
@@ -51,7 +52,7 @@ graph TD
     (e.g. 'spidr man')")] --> B["Normalize Query
     (remove hyphens/special chars)"]
     B --> C{"Exact Match?
-    (e.g. 'Spider-Man')"}
+    (e.g., 'Spider-Man')"}
     C -->|Yes| D[["Show Exact Results"]]
     C -->|No| E["Generate Suggestions
     (fuzzy matching)"]
@@ -74,8 +75,8 @@ graph TD
 
 **Query Normalization**
 
-```python
-# Converts all variants to comparable format
+```bash
+# Converts all variants to a comparable format
 "Spider-Man" → "spiderman"
 "avengers: endgame" → "avengers endgame"
 "batmn" → "batmn" (preserved for correction)
@@ -241,13 +242,13 @@ Contributions are welcome! Please feel free to submit a pull request.
 - Open a Pull Request
 
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-
 ## Contact
 
 E-mail: tushar.shihab13@gmail.com <br>
 More Projects: 👉🏿 [Projects](https://github.com/tshihab07?tab=repositories)<br>
 LinkedIn: [Tushar Shihab](https://www.linkedin.com/in/tshihab07/)
+
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
