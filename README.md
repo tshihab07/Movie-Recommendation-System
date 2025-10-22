@@ -44,7 +44,7 @@ This **Movie Recommendation System** is a Flask-based web application that helps
 
 ### Smart Suggestions Technique
 
-Content-based filtering using cosine similarity, which is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
+Content-based filtering using cosine similarity, is a comprehensive solution that handles both keyword-based results and intelligent suggestions.
 
 ```mermaid
 graph TD
