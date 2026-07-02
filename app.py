@@ -1,5 +1,8 @@
 import werkzeug
-werkzeug.urls.url_quote = werkzeug.utils.escape
+
+if not hasattr(werkzeug.urls, 'url_quote'):
+    werkzeug.urls.url_quote = werkzeug.utils.escape
+
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import pandas as pd
 import pickle
@@ -18,7 +21,6 @@ similar = pickle.load(open('model/similarities.pkl', 'rb'))
 
 # TMDB API Key
 API_KEY = '5dd351fde2e8606b5b6e50a24d10e888'
-
 
 
 ################ HELPER FUNCTIONS ################
